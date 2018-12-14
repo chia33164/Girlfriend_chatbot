@@ -30,7 +30,7 @@ class TocMachine(GraphMachine):
         self.go_back()
 
     def on_exit_birthday(self):
-        print('She say it is a good birthday present')
+        print('Leaving birthday')
 
     def on_enter_angry(self, event):
         print("She is angry now")
@@ -40,4 +40,4 @@ class TocMachine(GraphMachine):
         self.go_back()
 
     def on_exit_angry(self):
-        print('Ya, she is not angry')
+        print('Leaving angry')
