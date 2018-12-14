@@ -21,7 +21,6 @@ def fetch_content(url):
     return context
 
 def plant_pie(percent, labels):
-    plt.title("percent")
     colors = cm.rainbow(np.arange(len(percent))/len(percent))
     explode = (0.05, 0.05, 0.05)
     plt.pie(percent, explode=explode, labels=labels, colors=colors, autopct='%1.1f%%', shadow=False, startangle=140)
