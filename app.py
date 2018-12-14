@@ -1,9 +1,13 @@
-from bottle import route, run, request, abort, static_file
+import os
+from bottle import Bottle, request, abort, static_file
 
 from fsm import TocMachine
 
+app = Bottle()
 
-VERIFY_TOKEN = "123456789"
+VERIFY_TOKEN = os.environ['VERIFY_TOKEN']
+PORT = os.environ['PORT']
+
 machine = TocMachine(
     states=[
         'user',
@@ -41,7 +45,7 @@ machine = TocMachine(
 )
 
 
-@route("/webhook", method="GET")
+@app.route("/webhook", method="GET")
 def setup_webhook():
     mode = request.GET.get("hub.mode")
     token = request.GET.get("hub.verify_token")
@@ -53,7 +57,6 @@ def setup_webhook():
 
     else:
         abort(403)
-
 
 @route("/webhook", method="POST")
 def webhook_handler():
@@ -68,11 +71,6 @@ def webhook_handler():
         return 'OK'
 
 
-@route('/show-fsm', methods=['GET'])
-def show_fsm():
-    machine.get_graph().draw('fsm.png', prog='dot', format='png')
-    return static_file('fsm.png', root='./', mimetype='image/png')
-
 
 if __name__ == "__main__":
-    run(host="localhost", port=5000, debug=True, reloader=True)
+    app.run(host="0.0.0.0", port=PORT, debug=True, reloader=True)
