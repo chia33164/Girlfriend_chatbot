@@ -1,34 +1,45 @@
 from bottle import route, run, request, abort, static_file
-
+import os
 from fsm import TocMachine
 
 
-VERIFY_TOKEN = "123456789"
+VERIFY_TOKEN = os.environ.get("VERIFY_TOKEN")
 machine = TocMachine(
     states=[
         'user',
+        'choose',
         'birthday',
-        'angry'
+        'angry',
+        'sad',
+        'month',
+        'boring',
+        'happy',
+        'bad'
     ],
     transitions=[
+        {'trigger': 'advance', 'source': 'user'    , 'dest': 'choose'  , 'conditions': 'is_going_to_choose'},
+        {'trigger': 'advance', 'source': 'choose'  , 'dest': 'birthday', 'conditions': 'is_going_to_birthday'},
+        {'trigger': 'advance', 'source': 'choose'  , 'dest': 'angry'   , 'conditions': 'is_going_to_angry'},
+        {'trigger': 'advance', 'source': 'choose'  , 'dest': 'month'   , 'conditions': 'is_going_to_month'},
+        {'trigger': 'advance', 'source': 'birthday', 'dest': 'happy'   , 'conditions': 'is_going_to_happy'},
+        {'trigger': 'advance', 'source': 'birthday', 'dest': 'bad'     , 'conditions': 'is_going_to_bad'},
+        {'trigger': 'advance', 'source': 'month'   , 'dest': 'happy'   , 'conditions': 'is_going_to_happy'},
+        {'trigger': 'advance', 'source': 'month'   , 'dest': 'bad'     , 'conditions': 'is_going_to_bad'},
+        {'trigger': 'advance', 'source': 'angry'   , 'dest': 'happy'   , 'conditions': 'is_going_to_happy'},
+        {'trigger': 'advance', 'source': 'angry'   , 'dest': 'bad'     , 'conditions': 'is_going_to_bad'},
         {
-            'trigger': 'advance',
-            'source': 'user',
-            'dest': 'birthday',
-            'conditions': 'is_going_to_birthday'
-        },
-        {
-            'trigger': 'advance',
-            'source': 'user',
-            'dest': 'angry',
-            'conditions': 'is_going_to_angry'
-        },
-        {
-            'trigger': 'go_back',
+            'trigger': 'go_back', 
             'source': [
+                'user',
+                'choose',
                 'birthday',
-                'angry'
-            ],
+                'angry',
+                'sad',
+                'month',
+                'boring',
+                'happy',
+                'bad'
+            ],      
             'dest': 'user'
         }
     ],
@@ -56,13 +67,14 @@ def setup_webhook():
 def webhook_handler():
     body = request.json
     print('\nFSM STATE: ' + machine.state)
-    print('REQUEST BODY: ')
-    print(body)
+    # print('REQUEST BODY: ')
+    # print(body)
 
     if body['object'] == "page":
         event = body['entry'][0]['messaging'][0]
+        print(event)
         machine.advance(event)
-        return 'OK'
+    return 'OK'
 
 
 @route('/show-fsm', methods=['GET'])
@@ -72,4 +84,4 @@ def show_fsm():
 
 
 if __name__ == "__main__":
-    run(host="localhost", port=5000, debug=True, reloader=True)
+    run(host="localhost", port=6000, debug=True, reloader=True)
