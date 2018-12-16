@@ -8,6 +8,7 @@ import matplotlib
 from matplotlib import pyplot as plt
 import numpy as np
 from  matplotlib import cm
+from matplotlib.font_manager import FontProperties
 matplotlib.font_manager._rebuild()
 
 def search(url, param) :
@@ -28,10 +29,11 @@ def plant_pie(percent, labels):
     plt.legend(labels, loc=2)
     plt.axis('equal')
     plt.savefig('picture.png')
+    plt.close('all')
     path = os.getcwd() +'/picture.png'
     return path
 
-def crawler(string, find_param):
+def crawler(string, find_param, Estring):
     num = []
     percent = []
     sum_all = 0
@@ -55,9 +57,10 @@ def crawler(string, find_param):
         percent.append(round(i*100/sum_all))
     for i in range(len(string)):
         print('percent of ', string[i], ' is ', percent[i], '%')
-    return plant_pie(percent, string)
+    return plant_pie(percent, Estring)
 
 # if __name__ == '__main__':
 #     find_param = {'q' : '生日'}
-#     string = ['鞋子', '手錶']
-#     crawler(string, find_param)
+#     string = ['鞋子', '手錶','卡片']
+#     Estring = ['shoes', 'watch', 'card']
+#     crawler(string, find_param, Estring)

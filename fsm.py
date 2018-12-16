@@ -1,5 +1,5 @@
 from transitions.extensions import GraphMachine
-
+import os, sys
 from utils import send_text_message
 from utils import send_button_message
 from utils import send_image_url
@@ -35,7 +35,8 @@ class TocMachine(GraphMachine):
         sender_id = event['sender']['id']
         find_param = {'q' : '生日'}
         string = ['鞋子', '卡片', '手錶']
-        old_img_url = crawler(string, find_param)
+        Estring = ['shoes', 'watch', 'card']
+        old_img_url = crawler(string, find_param, Estring)
         img_url = upload_photo(old_img_url)
         btn = [
             {
@@ -69,7 +70,8 @@ class TocMachine(GraphMachine):
         sender_id = event['sender']['id']
         find_param = {'q' : '生氣'}
         string = ['放生', '道歉', '禮物']
-        old_img_url = crawler(string, find_param)
+        Estring = ['not care', 'say sorry', 'gift']
+        old_img_url = crawler(string, find_param, Estring)
         img_url = upload_photo(old_img_url)
         btn = [
             {
@@ -103,7 +105,8 @@ class TocMachine(GraphMachine):
         sender_id = event['sender']['id']
         find_param = {'q' : '月經'}
         string = ['巧克力', '不理', '黑糖']
-        old_img_url = crawler(string, find_param)
+        Estring = ['chocolate', 'not care', 'Brown sugar']
+        old_img_url = crawler(string, find_param, Estring)
         img_url = upload_photo(old_img_url)
         btn = [
             {
