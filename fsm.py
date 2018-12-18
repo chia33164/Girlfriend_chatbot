@@ -12,12 +12,13 @@ class TocMachine(GraphMachine):
             model=self,
             **machine_configs
         )
-
+        
     # for choose
     def is_going_to_choose(self, event):
         if event.get("message"):
-            text = event['message']['text']
-            return text.lower() == 'start'
+            if event['message'].get('text'):
+                text = event['message']['text']
+                return text.lower() == 'start'
         return False
     
     def on_enter_choose(self, event):
@@ -27,8 +28,9 @@ class TocMachine(GraphMachine):
     # for birthday
     def is_going_to_birthday(self, event):
         if event.get("message"):
-            text = event['message']['text']
-            return text.lower() == 'birthday'
+            if event['message'].get('text'):
+                text = event['message']['text']
+                return text.lower() == 'birthday'
         return False
     
     def on_enter_birthday(self, event):
@@ -62,8 +64,9 @@ class TocMachine(GraphMachine):
     # for angry
     def is_going_to_angry(self, event):
         if event.get("message"):
-            text = event['message']['text']
-            return text.lower() == 'angry'
+            if event['message'].get('text'):
+                text = event['message']['text']
+                return text.lower() == 'angry'
         return False
 
     def on_enter_angry(self, event):
@@ -97,8 +100,9 @@ class TocMachine(GraphMachine):
     # for month
     def is_going_to_month(self, event):
         if event.get("message"):
-            text = event['message']['text']
-            return text.lower() == 'month'
+            if event['message'].get('text'):
+                text = event['message']['text']
+                return text.lower() == 'month'
         return False
     
     def on_enter_month(self, event):
@@ -132,8 +136,9 @@ class TocMachine(GraphMachine):
     # for happy
     def is_going_to_happy(self, event):
         if event.get("postback"):
-            text = event['postback']['payload']
-            return (text == '巧克力')|(text == '黑糖')|(text == '卡片')|(text == '鞋子')|(text == '手錶')|(text == '禮物')|(text == '道歉')|(text == '親親')
+            if event['postback'].get('payload'):
+                text = event['postback']['payload']
+                return (text == '巧克力')|(text == '黑糖')|(text == '卡片')|(text == '鞋子')|(text == '手錶')|(text == '禮物')|(text == '道歉')|(text == '親親')
         return False
 
     def on_enter_happy(self, event):
@@ -144,8 +149,9 @@ class TocMachine(GraphMachine):
     # for bad end
     def is_going_to_bad(self, event):
         if event.get("postback"):
-            text = event['postback']['payload']
-            return (text == '不理')|(text == '放生')
+            if event['postback'].get('payload'):
+                text = event['postback']['payload']
+                return (text == '不理')|(text == '放生')
         return False
 
     def on_enter_bad(self, event):
@@ -168,8 +174,9 @@ class TocMachine(GraphMachine):
     # for breakup
     def is_going_to_breakup(self, event):
         if event.get("postback"):
-            text = event['postback']['payload']
-            return (text == '分手吧')
+            if event['postback'].get('payload'):
+                text = event['postback']['payload']
+                return (text == '分手吧')
         return False
 
     def on_enter_breakup(self, event):
@@ -180,8 +187,9 @@ class TocMachine(GraphMachine):
     # for unbreakup
     def is_going_to_unbreakup(self, event):
         if event.get("postback"):
-            text = event['postback']['payload']
-            return (text == '不要拜託')
+            if event['postback'].get('payload'):
+                text = event['postback']['payload']
+                return (text == '不要拜託')
         return False
 
     def on_enter_unbreakup(self, event):
@@ -199,8 +207,9 @@ class TocMachine(GraphMachine):
     # for reangry
     def is_going_to_reangry(self, event):
         if event.get("postback"):
-            text = event['postback']['payload']
-            return (text == '超氣')
+            if event['postback'].get('payload'):
+                text = event['postback']['payload']
+                return (text == '超氣')
         return False
 
     def on_enter_reangry(self, event):
@@ -223,8 +232,3 @@ class TocMachine(GraphMachine):
             }
         ]
         send_button_message(sender_id, "你女友：給我好好選歐", btn)
-
-
-
-
-        
