@@ -133,7 +133,7 @@ class TocMachine(GraphMachine):
     def is_going_to_happy(self, event):
         if event.get("postback"):
             text = event['postback']['payload']
-            return (text == '巧克力')|(text == '黑糖')|(text == '卡片')|(text == '鞋子')|(text == '手錶')|(text == '禮物')|(text == '道歉')
+            return (text == '巧克力')|(text == '黑糖')|(text == '卡片')|(text == '鞋子')|(text == '手錶')|(text == '禮物')|(text == '道歉')|(text == '親親')
         return False
 
     def on_enter_happy(self, event):
@@ -150,5 +150,81 @@ class TocMachine(GraphMachine):
 
     def on_enter_bad(self, event):
         sender_id = event['sender']['id']
-        send_text_message(sender_id, "死去")
+        btn = [
+            {
+              "type": "postback",
+              "title": "分手吧",
+              "payload": "分手吧"
+            },
+            {
+              "type": "postback",
+              "title": "不要拜託",
+              "payload": "不要拜託"
+            },
+        ]
+        send_text_message(sender_id, "你女友：我們分手吧")
+        send_button_message(sender_id, "你想分手嗎？", btn)
+
+    # for breakup
+    def is_going_to_breakup(self, event):
+        if event.get("postback"):
+            text = event['postback']['payload']
+            return (text == '分手吧')
+        return False
+
+    def on_enter_breakup(self, event):
+        sender_id = event['sender']['id']
+        send_text_message(sender_id, "水啦恭喜你恢復單身！！")
         self.go_back()
+
+    # for unbreakup
+    def is_going_to_unbreakup(self, event):
+        if event.get("postback"):
+            text = event['postback']['payload']
+            return (text == '不要拜託')
+        return False
+
+    def on_enter_unbreakup(self, event):
+        sender_id = event['sender']['id']
+        btn = [
+            {
+              "type": "postback",
+              "title": "超氣",
+              "payload": "超氣"
+            }
+        ]
+        send_text_message(sender_id, "你女友：看在你這麼有誠意的份上，我提示你，我現在正在生氣歐！！")
+        send_button_message(sender_id, "她正在生氣嗎？", btn)
+    
+    # for reangry
+    def is_going_to_reangry(self, event):
+        if event.get("postback"):
+            text = event['postback']['payload']
+            return (text == '超氣')
+        return False
+
+    def on_enter_reangry(self, event):
+        sender_id = event['sender']['id']
+        btn = [
+            {
+              "type": "postback",
+              "title": "親親",
+              "payload": "親親"
+            },
+            {
+              "type": "postback",
+              "title": "道歉",
+              "payload": "道歉"
+            },
+            {
+              "type": "postback",
+              "title": "禮物",
+              "payload": "禮物"
+            }
+        ]
+        send_button_message(sender_id, "你女友：給我好好選歐", btn)
+
+
+
+
+        

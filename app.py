@@ -3,6 +3,7 @@ import os
 from fsm import TocMachine
 
 VERIFY_TOKEN = os.environ.get("VERIFY_TOKEN")
+
 machine = TocMachine(
     states=[
         'user',
@@ -11,19 +12,26 @@ machine = TocMachine(
         'angry',
         'month',
         'happy',
-        'bad'
+        'bad',
+        'breakup',
+        'unbreakup',
+        'reangry'
     ],
     transitions=[
-        {'trigger': 'advance', 'source': 'user'    , 'dest': 'choose'  , 'conditions': 'is_going_to_choose'},
-        {'trigger': 'advance', 'source': 'choose'  , 'dest': 'birthday', 'conditions': 'is_going_to_birthday'},
-        {'trigger': 'advance', 'source': 'choose'  , 'dest': 'angry'   , 'conditions': 'is_going_to_angry'},
-        {'trigger': 'advance', 'source': 'choose'  , 'dest': 'month'   , 'conditions': 'is_going_to_month'},
-        {'trigger': 'advance', 'source': 'birthday', 'dest': 'happy'   , 'conditions': 'is_going_to_happy'},
-        {'trigger': 'advance', 'source': 'birthday', 'dest': 'bad'     , 'conditions': 'is_going_to_bad'},
-        {'trigger': 'advance', 'source': 'month'   , 'dest': 'happy'   , 'conditions': 'is_going_to_happy'},
-        {'trigger': 'advance', 'source': 'month'   , 'dest': 'bad'     , 'conditions': 'is_going_to_bad'},
-        {'trigger': 'advance', 'source': 'angry'   , 'dest': 'happy'   , 'conditions': 'is_going_to_happy'},
-        {'trigger': 'advance', 'source': 'angry'   , 'dest': 'bad'     , 'conditions': 'is_going_to_bad'},
+        {'trigger': 'advance', 'source': 'user'    , 'dest': 'choose'   , 'conditions': 'is_going_to_choose'},
+        {'trigger': 'advance', 'source': 'choose'  , 'dest': 'birthday' , 'conditions': 'is_going_to_birthday'},
+        {'trigger': 'advance', 'source': 'choose'  , 'dest': 'angry'    , 'conditions': 'is_going_to_angry'},
+        {'trigger': 'advance', 'source': 'choose'  , 'dest': 'month'    , 'conditions': 'is_going_to_month'},
+        {'trigger': 'advance', 'source': 'birthday', 'dest': 'happy'    , 'conditions': 'is_going_to_happy'},
+        {'trigger': 'advance', 'source': 'birthday', 'dest': 'bad'      , 'conditions': 'is_going_to_bad'},
+        {'trigger': 'advance', 'source': 'month'   , 'dest': 'happy'    , 'conditions': 'is_going_to_happy'},
+        {'trigger': 'advance', 'source': 'month'   , 'dest': 'bad'      , 'conditions': 'is_going_to_bad'},
+        {'trigger': 'advance', 'source': 'angry'   , 'dest': 'happy'    , 'conditions': 'is_going_to_happy'},
+        {'trigger': 'advance', 'source': 'angry'   , 'dest': 'bad'      , 'conditions': 'is_going_to_bad'},
+        {'trigger': 'advance', 'source': 'bad'     , 'dest': 'breakup'  , 'conditions': 'is_going_to_breakup'},
+        {'trigger': 'advance', 'source': 'bad'     , 'dest': 'unbreakup', 'conditions': 'is_going_to_unbreakup'},
+        {'trigger': 'advance', 'source': 'unbreakup'   , 'dest': 'reangry'      , 'conditions': 'is_going_to_reangry'},
+        {'trigger': 'advance', 'source': 'reangry'   , 'dest': 'happy'      , 'conditions': 'is_going_to_happy'},
         {
             'trigger': 'go_back', 
             'source': [
@@ -33,7 +41,10 @@ machine = TocMachine(
                 'angry',
                 'month',
                 'happy',
-                'bad'
+                'bad',
+                'breakup',
+                'unbreakup',
+                'reangry'
             ],      
             'dest': 'user'
         }
