@@ -1,10 +1,8 @@
-# TOC Project 2019
-
-Template Code for TOC Project 2019
+# Girlfriend Chatbot
 
 A Facebook messenger bot based on a finite state machine
+粉絲團名稱 : Hi Sandy
 
-More details in the [Slides](https://hackmd.io/p/SkpBR-Yam#/) and [FAQ](https://hackmd.io/s/B1Xw7E8kN)
 
 ## Setup
 
@@ -18,14 +16,6 @@ More details in the [Slides](https://hackmd.io/p/SkpBR-Yam#/) and [FAQ](https://
 pip3 install -r requirements.txt
 ```
 
-* pygraphviz (For visualizing Finite State Machine)
-    * [Setup pygraphviz on Ubuntu](http://www.jianshu.com/p/a3da7ecc5303)
-
-#### Secret Data
-
-`VERIFY_TOKEN` and `ACCESS_TOKEN` **MUST** be set to proper values.
-Otherwise, you might not be able to run your code.
-
 #### Run Locally
 You can either setup https server or using `ngrok` as a proxy.
 
@@ -37,6 +27,10 @@ You can either setup https server or using `ngrok` as a proxy.
 
 After that, `ngrok` would generate a https URL.
 
+#### Run on google cloud platform
+
+* Use GCP implement deploy
+
 #### Run the sever
 
 ```sh
@@ -44,20 +38,62 @@ python3 app.py
 ```
 
 ## Finite State Machine
-![fsm](./img/show-fsm.png)
+![fsm](https://i.imgur.com/6k0MHTz.png)
 
 ## Usage
 The initial state is set to `user`.
 
-Every time `user` state is triggered to `advance` to another state, it will `go_back` to `user` state after the bot replies corresponding message.
+* state:user
 
-* user
-	* Input: "go to state1"
-		* Reply: "I'm entering state1"
+	* Input: "start"
+	  * state:choose
+	  * Reply: "你女朋友怎麼了嗎?"
+	  * (有三種 input)
 
-	* Input: "go to state2"
-		* Reply: "I'm entering state2"
+		* Input: "birthday" (女友生日要到了)
+		  * state: birthday
+		  * Reply: "網路推薦禮物前三名"
+		  * Reply: 一張爬蟲後畫出來的圓餅圖
+		  * Reply: 三個按鈕 1.鞋子 2.手錶 3.卡片
 
+		* Input: "month" (女友月經來)
+		  * state: month
+		  * Reply: "網路推薦方式前三名"
+		  * Reply: 一張爬蟲後畫出來的圓餅圖
+		  * Reply: 三個按鈕 1.巧克力 2.不理 3.黑糖
 
-## Reference
-[TOC-Project-2017](https://github.com/Lee-W/TOC-Project-2017) ❤️ [@Lee-W](https://github.com/Lee-W)
+		* Input: "angry" (女友生氣了)
+		  * state: angry
+		  * Reply: "網路推薦方式前三名"
+		  * Reply: 一張爬蟲後畫出來的圓餅圖
+		  * Reply: 三個按鈕 1.放生 2.道歉 3.禮物
+
+			* Input: 選擇按鈕 巧克力 黑糖 卡片 鞋子 手錶 禮物 道歉
+	  		  * state:happy
+	  		  * Reply: "恭喜你度過這次難關" (回到 user state)
+
+			* Input: 選擇按鈕 不理 放生
+	  		  * state:bad
+	  		  * Reply: "你女友：我們分手吧"
+			  * Reply: "你想分手嗎？"
+			  * Reply: 兩個按紐: 1.分手吧  2.不要拜託
+
+			  	* Input: 選擇按鈕 分手吧
+	  		  	  * state:breakup
+	  		  	  * Reply: "水啦恭喜你恢復單身！！" (回到 user state)
+
+			  	* Input: 選擇按鈕 不要拜託
+	  		  	  * state:unbreakup
+	  		  	  * Reply: "你女友：看在你這麼有誠意的份上，我提示你，我現在正在生氣歐！！"
+				  * Reply: "她正在生氣嗎？"
+				  * Reply: 一個按鈕 1.超氣
+
+					* Input: "超氣"
+	  		  	  	  * state:reangry
+	  		  	  	  * Reply: "你女友：給我好好選歐"
+					  * Reply: 3個按鈕 1.親親 2.道歉 3.禮物
+
+						* Input: 選擇按鈕 親親 道歉 禮物
+	  		  	  		  * state:happy
+	  		  	  		  * Reply: "恭喜你度過這次難關"  (回到 user state)
+
