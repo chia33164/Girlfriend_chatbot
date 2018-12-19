@@ -47,7 +47,7 @@ class TocMachine(GraphMachine):
         if event.get("postback"):
             if event['postback'].get('payload'):
                 text = event['postback']['payload']
-                return text == '她生日快到了\n該送什麼禮物給她'
+                return text == '她生日到了該送什麼禮物'
         return False
     
     def on_enter_birthday(self, event):
