@@ -26,8 +26,8 @@ class TocMachine(GraphMachine):
         btn = [
             {
               "type": "postback",
-              "title": "她生日快到了\n該送什麼禮物給她",
-              "payload": "她生日快到了\n該送什麼禮物給她"
+              "title": "她生日到了該送什麼禮物",
+              "payload": "她生日到了該送什麼禮物"
             },
             {
               "type": "postback",
