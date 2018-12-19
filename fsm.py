@@ -23,14 +23,31 @@ class TocMachine(GraphMachine):
     
     def on_enter_choose(self, event):
         sender_id = event['sender']['id']
-        responese = send_text_message(sender_id, "你女朋友怎麼了嗎？")
+        btn = [
+            {
+              "type": "postback",
+              "title": "她生日快到了，該送什麼禮物給她",
+              "payload": "她生日快到了，該送什麼禮物給她"
+            },
+            {
+              "type": "postback",
+              "title": "她月經來了，我該怎麼辦",
+              "payload": "她月經來了，我該怎麼辦"
+            },
+            {
+              "type": "postback",
+              "title": "她正在生氣...，我該怎麼辦",
+              "payload": "她正在生氣...，我該怎麼辦"
+            }
+        ]
+        send_button_message(sender_id, "你女朋友怎麼了嗎？", btn)
 
     # for birthday
     def is_going_to_birthday(self, event):
-        if event.get("message"):
-            if event['message'].get('text'):
-                text = event['message']['text']
-                return text.lower() == 'birthday'
+        if event.get("postback"):
+            if event['postback'].get('payload'):
+                text = event['postback']['payload']
+                return text == '她生日快到了，該送什麼禮物給她'
         return False
     
     def on_enter_birthday(self, event):
@@ -63,10 +80,10 @@ class TocMachine(GraphMachine):
 
     # for angry
     def is_going_to_angry(self, event):
-        if event.get("message"):
-            if event['message'].get('text'):
-                text = event['message']['text']
-                return text.lower() == 'angry'
+        if event.get("postback"):
+            if event['postback'].get('payload'):
+                text = event['postback']['payload']
+                return text == '她正在生氣...，我該怎麼辦'
         return False
 
     def on_enter_angry(self, event):
@@ -99,10 +116,10 @@ class TocMachine(GraphMachine):
 
     # for month
     def is_going_to_month(self, event):
-        if event.get("message"):
-            if event['message'].get('text'):
-                text = event['message']['text']
-                return text.lower() == 'month'
+        if event.get("postback"):
+            if event['postback'].get('payload'):
+                text = event['postback']['payload']
+                return text == '她月經來了，我該怎麼辦'
         return False
     
     def on_enter_month(self, event):
