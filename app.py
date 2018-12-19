@@ -2,8 +2,8 @@ from bottle import route, run, request, abort, static_file
 import os
 from fsm import TocMachine
 
-# VERIFY_TOKEN = os.environ.get("VERIFY_TOKEN")
-VERIFY_TOKEN="123456789"
+VERIFY_TOKEN = os.environ.get("VERIFY_TOKEN")
+
 machine = TocMachine(
     states=[
         'user',
