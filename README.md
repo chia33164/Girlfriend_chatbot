@@ -49,21 +49,21 @@ The initial state is set to `user`.
 	* Input: "start"
 	  * state:choose
 	  * Reply: "你女朋友怎麼了嗎?"
-	  * (有三種 input)
+	  * Reply: 三個按鈕 1. 她生日到了該送什麼禮物 2. 她月經來了，我該怎麼辦 3. 她正在生氣...，我該怎麼辦
 
-		* Input: "birthday" (女友生日要到了)
+		* Input: 選擇按鈕"她生日到了該送什麼禮物"
 		  * state: birthday
 		  * Reply: "網路推薦禮物前三名"
 		  * Reply: 一張爬蟲後畫出來的圓餅圖
 		  * Reply: 三個按鈕 1.鞋子 2.手錶 3.卡片
 
-		* Input: "month" (女友月經來)
+		* Input: 選擇按鈕"她月經來了，我該怎麼辦"
 		  * state: month
 		  * Reply: "網路推薦方式前三名"
 		  * Reply: 一張爬蟲後畫出來的圓餅圖
 		  * Reply: 三個按鈕 1.巧克力 2.不理 3.黑糖
 
-		* Input: "angry" (女友生氣了)
+		* Input: 選擇按鈕"她正在生氣...，我該怎麼辦"
 		  * state: angry
 		  * Reply: "網路推薦方式前三名"
 		  * Reply: 一張爬蟲後畫出來的圓餅圖
